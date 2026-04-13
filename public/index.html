@@ -110,15 +110,14 @@
             <div class="field"><label>תעודת זהות</label><input id="idNumber" type="text" disabled /></div>
             <div class="field"><label>טלפון</label><input id="phone" type="tel" /></div>
             <div class="field"><label>אימייל</label><input id="email" type="email" /></div>
-            <div class="field"><label>קישור לטופס 101</label><input id="form101Url" type="url" /></div>
           </div>
         </section>
 
         <section class="card">
           <div class="sectionTitle">
             <div>
-              <h3>פרטי חשבון בנק ושכר</h3>
-              <div class="sub">השדות האלו נדרשים לצורך חישוב וסיכום שכר חודשי.</div>
+              <h3>פרטי חשבון בנק</h3>
+              <div class="sub">השדות האלו נדרשים לצורך קליטת הטופס ותשלום השכר.</div>
             </div>
           </div>
           <div class="threeCol">
@@ -126,8 +125,6 @@
             <div class="field"><label>בנק</label><input id="bankName" type="text" /></div>
             <div class="field"><label>מספר סניף</label><input id="branchNumber" type="text" /></div>
             <div class="field"><label>מספר חשבון בנק</label><input id="bankAccount" type="text" /></div>
-            <div class="field"><label>שכר שעתי</label><input id="hourlyRate" type="number" min="0" step="0.01" /></div>
-            <div class="field"><label>נסיעות ליום</label><input id="travelPerDay" type="number" min="0" step="0.01" /></div>
           </div>
           <div id="profileNotice" class="notice hidden" style="margin-top:16px"></div>
         </section>
@@ -136,7 +133,16 @@
           <div class="sectionTitle">
             <div>
               <h3>מסמכים נדרשים</h3>
-              <div class="sub">יש להעלות צילום תעודת זהות ותיאום מס. אפשר לעדכן גם בהמשך.</div>
+              <div class="sub">יש להעלות צילום תעודת זהות ותיאום מס, ולמלא טופס 101 דרך הקישור המצורף.</div>
+            </div>
+          </div>
+          <div class="fileCard" style="margin-bottom:16px">
+            <div>
+              <strong>טופס 101</strong>
+              <div class="fileMeta">יש למלא את טופס 101 לפני שליחת החודש.</div>
+            </div>
+            <div class="actions">
+              <a class="btnPrimary" id="form101Link" href="https://tpz.link/xb2jv" target="_blank" rel="noreferrer">לפתיחת טופס 101</a>
             </div>
           </div>
           <div class="twoCol">
@@ -186,6 +192,7 @@
             <div class="summaryTile"><span>שעות רגילות</span><strong id="sumRegularHours">0</strong></div>
             <div class="summaryTile"><span>נוספות 125%</span><strong id="sumOt125">0</strong></div>
             <div class="summaryTile"><span>נוספות 150%</span><strong id="sumOt150">0</strong></div>
+            <div class="summaryTile"><span>סה"כ נסיעות</span><strong id="sumTravelAmount">₪0</strong></div>
             <div class="summaryTile"><span>סה"כ לתשלום</span><strong id="sumTotalPay">₪0</strong></div>
           </div>
 

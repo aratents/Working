@@ -66,7 +66,8 @@ async function loadConfig() {
   qs('#addressPill').textContent = company.address;
   qs('#websitePill').textContent = company.website.replace(/^https?:\/\//, '');
   qs('#websitePill').href = company.website;
-  qs('#form101Url').value = company.form101Url || company.website || '';
+  const formLink = qs('#form101Link');
+  if (formLink) formLink.href = company.form101Url || 'https://tpz.link/xb2jv';
   qs('#footerYear').textContent = new Date().getFullYear();
 }
 
@@ -98,9 +99,6 @@ function populateProfile(employee) {
   qs('#bankName').value = employee.bankName || '';
   qs('#branchNumber').value = employee.branchNumber || '';
   qs('#bankAccount').value = employee.bankAccount || '';
-  qs('#hourlyRate').value = employee.hourlyRate || '';
-  qs('#travelPerDay').value = employee.travelPerDay || '';
-  qs('#form101Url').value = employee.form101Url || state.company?.form101Url || '';
   renderDocuments(employee.documents || {});
 }
 
@@ -124,10 +122,7 @@ function collectProfilePayload() {
     beneficiaryName: qs('#beneficiaryName').value.trim(),
     bankName: qs('#bankName').value.trim(),
     branchNumber: qs('#branchNumber').value.trim(),
-    bankAccount: qs('#bankAccount').value.trim(),
-    hourlyRate: Number(qs('#hourlyRate').value || 0),
-    travelPerDay: Number(qs('#travelPerDay').value || 0),
-    form101Url: qs('#form101Url').value.trim()
+    bankAccount: qs('#bankAccount').value.trim()
   };
 }
 
@@ -174,7 +169,7 @@ function renderTimesheet(timesheet) {
       <td>${row.regularHours ?? 0}</td>
       <td>${row.overtime125Hours ?? 0}</td>
       <td>${row.overtime150Hours ?? 0}</td>
-      <td>₪${row.travelAmount ?? 0}</td>
+      <td><input type="number" min="0" step="0.01" data-field="travelAmount" data-index="${index}" value="${row.travelAmount ?? 0}" /></td>
       <td>₪${row.totalPay ?? 0}</td>
     `;
     tbody.appendChild(tr);
@@ -191,6 +186,7 @@ function renderSummary(summary) {
   qs('#sumRegularHours').textContent = summary.regularHours ?? 0;
   qs('#sumOt125').textContent = summary.overtime125Hours ?? 0;
   qs('#sumOt150').textContent = summary.overtime150Hours ?? 0;
+  qs('#sumTravelAmount').textContent = `₪${summary.travelAmount ?? 0}`;
   qs('#sumTotalPay').textContent = `₪${summary.totalPay ?? 0}`;
 }
 

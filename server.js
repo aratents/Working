@@ -75,7 +75,7 @@ function round2(num) {
   return Math.round((Number(num) + Number.EPSILON) * 100) / 100;
 }
 
-function calculateRows(rows, hourlyRate, travelPerDay) {
+function calculateRows(rows, hourlyRate) {
   const normalizedRows = (rows || []).map((row) => {
     const totalMinutes = minutesBetween(row.startTime, row.endTime);
     const totalHours = totalMinutes / 60;
@@ -83,7 +83,8 @@ function calculateRows(rows, hourlyRate, travelPerDay) {
     const ot125Hours = Math.min(Math.max(totalHours - 8, 0), 2);
     const ot150Hours = Math.max(totalHours - 10, 0);
     const worked = totalHours > 0;
-    const travelAmount = worked ? Number(travelPerDay || 0) : 0;
+    const rawTravel = Number(row.travelAmount || 0);
+    const travelAmount = worked ? rawTravel : 0;
     const regularPay = regularHours * Number(hourlyRate || 0);
     const ot125Pay = ot125Hours * Number(hourlyRate || 0) * 1.25;
     const ot150Pay = ot150Hours * Number(hourlyRate || 0) * 1.5;
@@ -140,9 +141,8 @@ function buildEmployeePayload(employee) {
     bankName: employee.bankName || '',
     branchNumber: employee.branchNumber || '',
     bankAccount: employee.bankAccount || '',
-    form101Url: employee.form101Url || process.env.FORM_101_URL || '',
-    hourlyRate: Number(employee.hourlyRate || 0),
-    travelPerDay: Number(employee.travelPerDay || 0),
+    form101Url: employee.form101Url || process.env.FORM_101_URL || 'https://tpz.link/xb2jv',
+    hourlyRate: Number(employee.hourlyRate || process.env.DEFAULT_HOURLY_RATE || 0),
     documents: employee.documents || {},
     createdAt: employee.createdAt,
     updatedAt: employee.updatedAt
@@ -223,7 +223,7 @@ app.get('/api/config', (_req, res) => {
       address: process.env.COMPANY_ADDRESS || 'מושב גינתון',
       companyId: process.env.COMPANY_ID || '516009784',
       website: process.env.COMPANY_WEBSITE || 'https://www.ar-a.co.il',
-      form101Url: process.env.FORM_101_URL || 'https://www.ar-a.co.il'
+      form101Url: process.env.FORM_101_URL || 'https://tpz.link/xb2jv'
     }
   });
 });
@@ -239,7 +239,7 @@ app.post('/api/auth/login', (req, res) => {
     db.employees[idNumber] = {
       idNumber,
       documents: {},
-      form101Url: process.env.FORM_101_URL || '',
+      form101Url: process.env.FORM_101_URL || 'https://tpz.link/xb2jv',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -278,9 +278,10 @@ app.put('/api/employee/:idNumber', (req, res) => {
   employee.bankName = String(req.body.bankName || '').trim();
   employee.branchNumber = String(req.body.branchNumber || '').trim();
   employee.bankAccount = String(req.body.bankAccount || '').trim();
-  employee.form101Url = String(req.body.form101Url || process.env.FORM_101_URL || '').trim();
-  employee.hourlyRate = Number(req.body.hourlyRate || 0);
-  employee.travelPerDay = Number(req.body.travelPerDay || 0);
+  employee.form101Url = String(employee.form101Url || process.env.FORM_101_URL || 'https://tpz.link/xb2jv').trim();
+  if (req.body.hourlyRate !== undefined && req.body.hourlyRate !== null && req.body.hourlyRate !== '') {
+    employee.hourlyRate = Number(req.body.hourlyRate || 0);
+  }
   employee.updatedAt = new Date().toISOString();
   db.employees[idNumber] = employee;
   writeDb(db);
@@ -331,7 +332,7 @@ app.get('/api/timesheet/:idNumber/:month', (req, res) => {
   const key = employeeMonthKey(idNumber, month);
   if (!db.timesheets[key]) {
     const seededRows = makeMonthRows(month);
-    const calc = calculateRows(seededRows, employee.hourlyRate, employee.travelPerDay);
+    const calc = calculateRows(seededRows, employee.hourlyRate || process.env.DEFAULT_HOURLY_RATE || 0);
     db.timesheets[key] = {
       employeeIdNumber: idNumber,
       month,
@@ -359,7 +360,7 @@ app.put('/api/timesheet/:idNumber/:month', (req, res) => {
   const key = employeeMonthKey(idNumber, month);
   const incomingRows = Array.isArray(req.body.rows) ? req.body.rows : [];
   const rows = incomingRows.length ? incomingRows : makeMonthRows(month);
-  const calc = calculateRows(rows, employee.hourlyRate, employee.travelPerDay);
+  const calc = calculateRows(rows, employee.hourlyRate || process.env.DEFAULT_HOURLY_RATE || 0);
 
   db.timesheets[key] = {
     employeeIdNumber: idNumber,
@@ -475,8 +476,9 @@ app.post('/api/timesheet/:idNumber/:month/submit', async (req, res) => {
 
     return res.json({ ok: true, submittedAt: timesheet.submittedAt });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'אירעה שגיאה בשליחה.' });
+    console.error('Mail submit error:', error);
+    const msg = error?.message ? `אירעה שגיאה בשליחה: ${error.message}` : 'אירעה שגיאה בשליחה.';
+    return res.status(500).json({ error: msg });
   }
 });
 
@@ -494,7 +496,6 @@ function buildMonthlySummaryCsv(submissions, month) {
     phone: item.employee.phone || '',
     email: item.employee.email || '',
     hourlyRate: item.employee.hourlyRate || 0,
-    travelPerDay: item.employee.travelPerDay || 0,
     workDays: item.summary.workDays,
     totalHours: item.summary.totalHours,
     regularHours: item.summary.regularHours,
