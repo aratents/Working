@@ -3,83 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ארה אוהלים ומבני מתיחה בעמ - פורטל עובדים</title>
+  <title>ארה אוהלים ומבני מתיחה בעמ - דיווח שעות עבודה</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero compactHero">
     <div class="container">
-      <div class="heroTop">
+      <div class="heroTop compactTop">
         <div class="brand">
           <div class="logoShell">
             <img src="/logo.png" alt="לוגו ארה אוהלים ומבני מתיחה בעמ" />
           </div>
           <div class="brandText">
-            <h1 id="companyName">ארה אוהלים ומבני מתיחה בעמ</h1>
-            <p id="companyLine">פתרונות אוהלים, האנגרים ומבני מתיחה - פורטל דיווח שעות לעובדים</p>
+            <h1 id="companyName">ארה אוהלים ומבני מתיחה בעמ - דיווח שעות עבודה</h1>
           </div>
         </div>
-        <div class="contactPills">
+        <div class="contactPills compactPills">
           <div class="pill" id="phonePill">050-4989113 עידן | 0587878993 אייל</div>
           <a class="pill" id="emailPill" href="mailto:office@ar-a.co.il">office@ar-a.co.il</a>
           <div class="pill" id="addressPill">מושב גינתון</div>
-          <a class="pill" id="websitePill" href="https://www.ar-a.co.il" target="_blank" rel="noreferrer">www.ar-a.co.il</a>
         </div>
-      </div>
-      <div class="heroIntro">
-        <h2>כניסה אישית, מילוי שעות, ושיגור חודשי לחברה</h2>
-        <p>
-          כל עובד נכנס עם תעודת הזהות שלו, שומר ומעדכן את הפרטים במהלך החודש, מעלה את המסמכים הנדרשים,
-          ומגיש את טופס השעות החודשי ישירות למייל החברה בסיום החודש.
-        </p>
       </div>
     </div>
   </header>
 
-  <main class="main">
+  <main class="main compactMain">
     <div class="container">
-      <section class="card" id="loginCard">
-        <div class="loginGrid">
-          <div class="panelDark">
-            <h3>ברוכים הבאים לפורטל העובדים</h3>
-            <p>
-              הכניסה מתבצעת לפי תעודת זהות. לאחר הכניסה תוכלו לעדכן את הפרטים האישיים, פרטי הבנק,
-              להעלות קבצים, למלא שעות לפי ימים, ולשלוח את החודש המאושר למשרד.
-            </p>
-            <div class="checkList">
-              <div class="checkItem">
-                <div class="checkIcon">1</div>
-                <div><b>כניסה אישית</b><span>גישה לטופס העובד לפי תעודת הזהות שלו.</span></div>
-              </div>
-              <div class="checkItem">
-                <div class="checkIcon">2</div>
-                <div><b>שמירה ועדכון</b><span>אפשר לחזור במהלך החודש ולעדכן את השעות והפרטים.</span></div>
-              </div>
-              <div class="checkItem">
-                <div class="checkIcon">3</div>
-                <div><b>שליחה מסודרת</b><span>בסוף החודש הטופס נשלח לחברה יחד עם הסיכום המחושב.</span></div>
-              </div>
-            </div>
+      <section class="card loginOnly" id="loginCard">
+        <div class="sectionTitle" style="margin-bottom:22px">
+          <h2>כניסה</h2>
+        </div>
+        <div class="loginSimple">
+          <div class="field">
+            <label for="loginIdNumber">תעודת זהות</label>
+            <input id="loginIdNumber" type="text" inputmode="numeric" maxlength="9" placeholder="הזן תעודת זהות" />
           </div>
-
-          <div>
-            <div class="sectionTitle">
-              <h2>כניסה למערכת</h2>
-              <span class="badge">גישה אישית לעובד</span>
-            </div>
-            <div class="field">
-              <label for="loginIdNumber">תעודת זהות</label>
-              <input id="loginIdNumber" type="text" inputmode="numeric" maxlength="9" placeholder="הזן תעודת זהות" />
-            </div>
-            <div class="actions" style="margin-top:16px">
-              <button class="btnPrimary" id="loginBtn">כניסה לטופס האישי</button>
-            </div>
-            <div class="helper">
-              <span>המערכת מזהה את הטופס האישי לפי תעודת הזהות.</span>
-            </div>
-            <div id="loginNotice" class="notice hidden" style="margin-top:16px"></div>
+          <div class="actions">
+            <button class="btnPrimary" id="loginBtn">כניסה</button>
           </div>
         </div>
+        <div id="loginNotice" class="notice hidden" style="margin-top:16px"></div>
       </section>
 
       <section class="hidden" id="portalSection">
@@ -87,71 +50,93 @@
           <div class="sectionTitle">
             <div>
               <h2>שלום <span id="employeeDisplayName">עובד</span></h2>
-              <div class="sub">כאן ניתן לעדכן את הפרטים האישיים, פרטי החשבון, המסמכים וטבלת השעות.</div>
+              <div class="sub">השלם את השלבים לפי הסדר. לאחר שמירת פרטים אישיים ופרטי בנק, השלב יינעל.</div>
             </div>
             <div class="actions">
               <span class="badge ok" id="loggedInBadge">מחובר</span>
               <button class="btnGhost" id="logoutBtn">התנתקות</button>
             </div>
           </div>
+          <div class="stepsBar">
+            <button class="stepPill active" data-step-target="personal">1. פרטים אישיים</button>
+            <button class="stepPill" data-step-target="bank">2. פרטי בנק</button>
+            <button class="stepPill" data-step-target="documents">3. מסמכים נדרשים</button>
+            <button class="stepPill" data-step-target="hours">4. שעות עבודה</button>
+          </div>
         </section>
 
-        <section class="card">
+        <section class="card stepSection" id="personalStep">
           <div class="sectionTitle">
             <div>
               <h3>פרטים אישיים</h3>
-              <div class="sub">יש להשלים את כל הפרטים כדי שהחברה תוכל לקלוט את הטופס החודשי בצורה תקינה.</div>
+              <div class="sub">לאחר שמירה, הדף יינעל ולא יהיה ניתן לערוך אותו.</div>
             </div>
-            <button class="btnPrimary" id="saveProfileBtn">שמירת פרטי עובד</button>
+            <div class="actions">
+              <span class="badge" id="personalStatusBadge">ממתין למילוי</span>
+              <button class="btnPrimary" id="savePersonalBtn">שמירה ונעילה</button>
+            </div>
           </div>
-          <div class="threeCol">
+          <div class="threeCol" id="personalFields">
             <div class="field"><label>שם פרטי</label><input id="firstName" type="text" /></div>
             <div class="field"><label>שם משפחה</label><input id="lastName" type="text" /></div>
             <div class="field"><label>תעודת זהות</label><input id="idNumber" type="text" disabled /></div>
             <div class="field"><label>טלפון</label><input id="phone" type="tel" /></div>
             <div class="field"><label>אימייל</label><input id="email" type="email" /></div>
           </div>
+          <div id="personalLockBox" class="lockBox hidden">שלב זה ננעל לאחר מילוי.</div>
+          <div id="personalNotice" class="notice hidden" style="margin-top:16px"></div>
         </section>
 
-        <section class="card">
+        <section class="card stepSection hidden" id="bankStep">
           <div class="sectionTitle">
             <div>
               <h3>פרטי חשבון בנק</h3>
-              <div class="sub">השדות האלו נדרשים לצורך קליטת הטופס ותשלום השכר.</div>
+              <div class="sub">לאחר שמירה, הדף יינעל ולא יהיה ניתן לערוך אותו.</div>
+            </div>
+            <div class="actions">
+              <span class="badge" id="bankStatusBadge">ממתין למילוי</span>
+              <button class="btnPrimary" id="saveBankBtn">שמירה ונעילה</button>
             </div>
           </div>
-          <div class="threeCol">
+          <div class="threeCol" id="bankFields">
             <div class="field"><label>שם המוטב</label><input id="beneficiaryName" type="text" /></div>
             <div class="field"><label>בנק</label><input id="bankName" type="text" /></div>
             <div class="field"><label>מספר סניף</label><input id="branchNumber" type="text" /></div>
             <div class="field"><label>מספר חשבון בנק</label><input id="bankAccount" type="text" /></div>
           </div>
-          <div id="profileNotice" class="notice hidden" style="margin-top:16px"></div>
+          <div id="bankLockBox" class="lockBox hidden">שלב זה ננעל לאחר מילוי.</div>
+          <div id="bankNotice" class="notice hidden" style="margin-top:16px"></div>
         </section>
 
-        <section class="card">
+        <section class="card stepSection hidden" id="documentsStep">
           <div class="sectionTitle">
             <div>
               <h3>מסמכים נדרשים</h3>
-              <div class="sub">יש להעלות צילום תעודת זהות ותיאום מס, ולמלא טופס 101 דרך הקישור המצורף.</div>
+              <div class="sub">יש להשלים את כל המסמכים הנדרשים לפני שליחת החודש.</div>
+            </div>
+            <div class="actions">
+              <span class="badge" id="documentsStatusBadge">השלם מסמכים</span>
             </div>
           </div>
+
           <div class="fileCard" style="margin-bottom:16px">
             <div>
               <strong>טופס 101</strong>
-              <div class="fileMeta">יש למלא את טופס 101 לפני שליחת החודש.</div>
+              <div class="fileMeta">יש למלא את טופס 101 בקישור הבא ולסמן לאחר ההשלמה.</div>
             </div>
-            <div class="actions">
+            <div class="actions wrapMobile">
               <a class="btnPrimary" id="form101Link" href="https://tpz.link/xb2jv" target="_blank" rel="noreferrer">לפתיחת טופס 101</a>
+              <label class="inlineCheck"><input id="form101Done" type="checkbox" /> מילאתי טופס 101</label>
             </div>
           </div>
-          <div class="twoCol">
+
+          <div class="twoCol docsGrid">
             <div class="fileCard">
               <div>
-                <strong>תעודת זהות</strong>
+                <strong>צילום תעודת זהות</strong>
                 <div class="fileMeta" id="idCardMeta">עדיין לא הועלה קובץ</div>
               </div>
-              <div class="actions">
+              <div class="actions wrapMobile">
                 <input id="idCardFile" type="file" />
                 <button class="btnGhost" id="uploadIdCardBtn">העלה</button>
               </div>
@@ -161,20 +146,30 @@
                 <strong>תיאום מס</strong>
                 <div class="fileMeta" id="taxMeta">עדיין לא הועלה קובץ</div>
               </div>
-              <div class="actions">
+              <div class="actions wrapMobile">
                 <input id="taxFile" type="file" />
                 <button class="btnGhost" id="uploadTaxBtn">העלה</button>
+              </div>
+            </div>
+            <div class="fileCard">
+              <div>
+                <strong>תעודת שחרור</strong>
+                <div class="fileMeta" id="dischargeMeta">עדיין לא הועלה קובץ</div>
+              </div>
+              <div class="actions wrapMobile">
+                <input id="dischargeFile" type="file" />
+                <button class="btnGhost" id="uploadDischargeBtn">העלה</button>
               </div>
             </div>
           </div>
           <div id="filesNotice" class="notice hidden" style="margin-top:16px"></div>
         </section>
 
-        <section class="card">
+        <section class="card stepSection hidden" id="hoursStep">
           <div class="sectionTitle">
             <div>
-              <h3>טבלת שעות חודשית</h3>
-              <div class="sub">בחר חודש, מלא שעות התחלה וסיום לכל יום עבודה, ואז שמור ושלח בסוף החודש.</div>
+              <h3>שעות עבודה</h3>
+              <div class="sub">מלא שעות עבודה לכל יום. נסיעות מחושבות לפי תחבורה ציבורית או רכב פרטי, עד 40 ש"ח ליום עבודה.</div>
             </div>
             <div class="actions">
               <div class="field" style="min-width:220px">
@@ -196,8 +191,9 @@
             <div class="summaryTile"><span>סה"כ לתשלום</span><strong id="sumTotalPay">₪0</strong></div>
           </div>
 
-          <div class="helper">
-            <span>החישוב נעשה כך: עד 8 שעות רגיל, שעות 9-10 ב-125%, ומעבר לכך ב-150%.</span>
+          <div class="helper helperStack">
+            <span>חישוב שעות נוספות: עד 8 שעות רגיל, שעות 9-10 ב-125%, ומעבר לכך ב-150%.</span>
+            <span>נסיעות: תחבורה ציבורית לפי סכום בפועל עד 40 ש"ח. רכב פרטי לפי 1 ש"ח לק"מ ועד 40 ש"ח.</span>
             <span id="submitStamp"></span>
           </div>
 
@@ -208,6 +204,8 @@
                   <th>תאריך</th>
                   <th>שעת התחלה</th>
                   <th>שעת סיום</th>
+                  <th>סוג נסיעה</th>
+                  <th>עלות / ק"מ</th>
                   <th>הערה</th>
                   <th>סה"כ שעות</th>
                   <th>רגיל</th>
